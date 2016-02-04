@@ -23,17 +23,34 @@ function! test#ruby#github_minitest#build_position(type, position) abort
 
     " Set up the grep command to determine the line number of the test
     " description
-    let grep = 'grep -n "'.escaped_name.'" '.a:position['file'].' | cut -f1 -d:'
+    " TODO: convert to vimscript
+    let grep_command = 'grep -n "'.escaped_name.'" '.a:position['file'].' | cut -f1 -d:'
 
-    " Execute the grep and remove the newline
-    let line_number = system(grep)[:-2]
+    " Remove trailing newline
+    let escaped_grep_command = system(grep_command)[:-2]
 
-    return [a:position['file'], '--name', '/L'.line_number.'/']
+    let possible_line_numbers = split(escaped_grep_command, "\n")
+
+    "TODO: find index of smallest value in dictionary
+    echo min(s:line_number_closest_to_cursor(possible_line_numbers, a:position['line']))
+
+
+    return [a:position['file'], '--name', '/L'.escaped_grep_command.'/']
   elseif a:type == 'file'
     return [a:position['file']]
   else
     return []
   endif
+endfunction
+
+function! s:line_number_closest_to_cursor(numbers, cursor_position) abort
+  let proximities = {}
+
+  for number in a:numbers
+    let proximities[number] = abs(number - a:cursor_position)
+  endfor
+
+  return proximities
 endfunction
 
 function! test#ruby#github_minitest#build_args(args) abort
