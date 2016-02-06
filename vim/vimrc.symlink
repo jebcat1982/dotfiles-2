@@ -111,18 +111,6 @@ augroup END
 " Colors
 "-------------------------------------------------------------------------------
 
-set t_Co=16
-set background=light
-
-highlight LineNr ctermbg=245
-highlight LineNr ctermfg=253
-highlight CursorLine cterm=none ctermbg=236
-highlight CursorColumn cterm=none ctermbg=236
-highlight ColorColumn ctermbg=236
-highlight CursorLineNr ctermfg=green ctermbg=240
-highlight SignColumn ctermbg=none
-highlight VertSplit cterm=none ctermbg=251 ctermfg=251
-
 " Automatically remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -245,9 +233,23 @@ endif
 " Neovim
 if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  set background=dark
-  colorscheme base16-ocean
 
   " https://github.com/neovim/neovim/issues/2048
   nmap <BS> <C-W>h
 endif
+
+set background=dark
+colorscheme base16-ocean
+
+highlight LineNr        guibg=#404040 guifg=#BABABA
+highlight SignColumn    guibg=#424242 guifg=#424242
+highlight CursorLine    guibg=#383838
+highlight CursorColumn  guibg=#383838
+highlight VertSplit     guibg=#A4A4A4 guifg=#A4A4A4
+highlight CursorLineNr  guifg=#383838 guifg=#BEF781
+highlight ColorColumn   guibg=#292929
+
+highlight GitGutterAdd          guibg=#404040
+highlight GitGutterChange       guibg=#404040
+highlight GitGutterDelete       guibg=#404040
+highlight GitGutterChangeDelete guibg=#404040
